@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const id_dto_1 = require("../../common/dto/id.dto");
 const systemId_dto_1 = require("../../common/dto/systemId.dto");
+const unit_entity_1 = require("../../../database/entities/unit.entity");
 const unit_dto_1 = require("./dto/unit.dto");
 const unit_service_1 = require("./unit.service");
 let UnitController = class UnitController {
@@ -26,11 +27,8 @@ let UnitController = class UnitController {
     async getUnits() {
         return this.unitService.getUnits();
     }
-    async getUnitById(params) {
-        return this.unitService.getUnitById(params.id);
-    }
-    async getUnitBySystemId(params) {
-        return this.unitService.getUnitBySystemId(params.systemId);
+    async getUnitBySchoolIdAndSystemId(params) {
+        return this.unitService.getUnitBySchoolIdAndSystemId(params.systemId, params.schoolId);
     }
     async UpdateUnitById(params, payload) {
         return this.unitService.updateUnitById(params.id, payload);
@@ -52,25 +50,15 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UnitController.prototype, "getUnits", null);
 __decorate([
-    (0, common_1.Get)(':id'),
-    (0, swagger_1.ApiOperation)({ summary: 'Get Units by Id' }),
+    (0, common_1.Get)(':schoolId,:systemId'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get units by systemId and schoolId' }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Task executed with success' }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid Parameters' }),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [id_dto_1.IdDto]),
+    __metadata("design:paramtypes", [systemId_dto_1.SystemIdSchoolIdDto]),
     __metadata("design:returntype", Promise)
-], UnitController.prototype, "getUnitById", null);
-__decorate([
-    (0, common_1.Get)(':systemId'),
-    (0, swagger_1.ApiOperation)({ summary: 'Get units  by systemId' }),
-    (0, swagger_1.ApiResponse)({ status: 200, description: 'Task executed with success' }),
-    (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid Parameters' }),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [systemId_dto_1.SystemIdDto]),
-    __metadata("design:returntype", Promise)
-], UnitController.prototype, "getUnitBySystemId", null);
+], UnitController.prototype, "getUnitBySchoolIdAndSystemId", null);
 __decorate([
     (0, common_1.Put)(':id'),
     (0, swagger_1.ApiOperation)({ summary: 'Update unit by id' }),
@@ -80,7 +68,7 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [id_dto_1.IdDto, unit_dto_1.UnitDto]),
+    __metadata("design:paramtypes", [id_dto_1.IdDto, unit_entity_1.UnitEntity]),
     __metadata("design:returntype", Promise)
 ], UnitController.prototype, "UpdateUnitById", null);
 __decorate([
@@ -92,7 +80,7 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [systemId_dto_1.SystemIdDto, unit_dto_1.UnitDto]),
+    __metadata("design:paramtypes", [systemId_dto_1.SystemIdDto, unit_entity_1.UnitEntity]),
     __metadata("design:returntype", Promise)
 ], UnitController.prototype, "UpdateUnitBySystemId", null);
 __decorate([
@@ -103,7 +91,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid Parameters' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [unit_dto_1.UnitDto]),
+    __metadata("design:paramtypes", [unit_entity_1.UnitEntity]),
     __metadata("design:returntype", Promise)
 ], UnitController.prototype, "createUnit", null);
 UnitController = __decorate([

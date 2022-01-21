@@ -16,6 +16,7 @@ exports.SchoolController = void 0;
 const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const id_dto_1 = require("../../common/dto/id.dto");
+const school_entity_1 = require("../../../database/entities/school.entity");
 const school_dto_1 = require("./dto/school.dto");
 const school_service_1 = require("./school.service");
 let SchoolController = class SchoolController {
@@ -75,7 +76,7 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid Parameters' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [school_dto_1.SchoolDto]),
+    __metadata("design:paramtypes", [school_entity_1.SchoolEntity]),
     __metadata("design:returntype", Promise)
 ], SchoolController.prototype, "createSchool", null);
 __decorate([
@@ -87,7 +88,7 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [id_dto_1.IdDto, school_dto_1.SchoolDto]),
+    __metadata("design:paramtypes", [id_dto_1.IdDto, school_entity_1.SchoolEntity]),
     __metadata("design:returntype", Promise)
 ], SchoolController.prototype, "UpdateSchool", null);
 SchoolController = __decorate([

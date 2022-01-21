@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateOrUpdateResponseDto } from "src/api/common/dto/createUpdateResponse.dto";
 import { IdDto } from "src/api/common/dto/id.dto";
-import { SystemIdDto } from "src/api/common/dto/systemId.dto";
+import { SystemIdDto, SystemIdSchoolIdDto } from "src/api/common/dto/systemId.dto";
 import { UnitEntity } from "src/database/entities/unit.entity";
 import { UnitDto } from "./dto/unit.dto";
 import { UnitService } from "./unit.service";
@@ -20,20 +20,20 @@ export class UnitController{
         return this.unitService.getUnits();
     }
 
-    @Get(':id')
+   /*@Get(':id')
     @ApiOperation({ summary: 'Get Units by Id' })
     @ApiResponse({ status: 200, description: 'Task executed with success' })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
     async getUnitById(@Param() params: IdDto): Promise<UnitEntity> {
         return this.unitService.getUnitById(params.id);
-    }
+    }*/
 
-    @Get(':systemId')
-    @ApiOperation({ summary: 'Get units  by systemId' })
+    @Get(':schoolId,:systemId')
+    @ApiOperation({ summary: 'Get units by systemId and schoolId' })
     @ApiResponse({ status: 200, description: 'Task executed with success' })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
-    async getUnitBySystemId(@Param() params: SystemIdDto): Promise<UnitEntity[]> {
-        return this.unitService.getUnitBySystemId(params.systemId);
+    async getUnitBySchoolIdAndSystemId(@Param() params: SystemIdSchoolIdDto): Promise<UnitEntity[]> {
+        return this.unitService.getUnitBySchoolIdAndSystemId(params.systemId, params.schoolId);
     }
 
     @Put(':id')
@@ -41,7 +41,7 @@ export class UnitController{
     @ApiBody({ required: true, type: UnitDto })
     @ApiResponse({ status: 200, description: 'Task executed with success' ,type: UnitDto })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
-    async UpdateUnitById(@Param() params: IdDto, @Body() payload: UnitDto): Promise<CreateOrUpdateResponseDto>{
+    async UpdateUnitById(@Param() params: IdDto, @Body() payload: UnitEntity): Promise<CreateOrUpdateResponseDto>{
         return this.unitService.updateUnitById(params.id, payload);
     }
 
@@ -50,7 +50,7 @@ export class UnitController{
     @ApiBody({ required: true, type: UnitDto })
     @ApiResponse({ status: 200, description: 'Task executed with success' ,type: UnitDto })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
-    async UpdateUnitBySystemId(@Param() params: SystemIdDto, @Body() payload: UnitDto): Promise<CreateOrUpdateResponseDto>{
+    async UpdateUnitBySystemId(@Param() params: SystemIdDto, @Body() payload: UnitEntity): Promise<CreateOrUpdateResponseDto>{
         return this.unitService.updateUnitBySystemid(params.systemId, payload);
     }
 
@@ -59,7 +59,7 @@ export class UnitController{
     @ApiBody({ required: true, type: UnitDto })
     @ApiResponse({ status: 200, description: 'Task executed with success' ,type: UnitDto })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
-    async createUnit(@Body() payload: UnitDto): Promise<UnitDto | CreateOrUpdateResponseDto>{
+    async createUnit(@Body() payload: UnitEntity): Promise<CreateOrUpdateResponseDto>{
         return this.unitService.createUnit(payload);
     }
 }

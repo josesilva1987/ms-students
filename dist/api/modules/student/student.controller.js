@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const swagger_1 = require("@nestjs/swagger");
 const id_dto_1 = require("../../common/dto/id.dto");
 const ra_dto_1 = require("../../common/dto/ra.dto");
+const student_entity_1 = require("../../../database/entities/student.entity");
 const student_dto_1 = require("./dto/student.dto");
 const student_service_1 = require("./student.service");
 let StudentController = class StudentController {
@@ -36,7 +37,7 @@ let StudentController = class StudentController {
         return this.studentService.createStudent(payload);
     }
     async UpdateSchool(params, payload) {
-        return this.studentService.updateStudent(params.RA, payload);
+        return this.studentService.updateStudentById(params.id, payload);
     }
 };
 __decorate([
@@ -76,19 +77,19 @@ __decorate([
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid Parameters' }),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [student_dto_1.StudentDto]),
+    __metadata("design:paramtypes", [student_entity_1.StudentEntity]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "createSchool", null);
 __decorate([
-    (0, common_1.Put)(':RA'),
-    (0, swagger_1.ApiOperation)({ summary: 'Update a School by RA' }),
+    (0, common_1.Put)(':id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Update a School by ID' }),
     (0, swagger_1.ApiBody)({ required: true, type: student_dto_1.StudentDto }),
     (0, swagger_1.ApiResponse)({ status: 200, description: 'Task executed with success', type: student_dto_1.StudentDto }),
     (0, swagger_1.ApiResponse)({ status: 400, description: 'Invalid Parameters' }),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [ra_dto_1.RADto, student_dto_1.StudentDto]),
+    __metadata("design:paramtypes", [id_dto_1.IdDto, student_entity_1.StudentEntity]),
     __metadata("design:returntype", Promise)
 ], StudentController.prototype, "UpdateSchool", null);
 StudentController = __decorate([

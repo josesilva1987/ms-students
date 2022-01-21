@@ -7,6 +7,6 @@ export class AppController {
 
   @Get('/running')
   getRunning(): string {
-    return `RUNNING 1.0.0`;
+    return this.appService.getRunning();
   }
 }

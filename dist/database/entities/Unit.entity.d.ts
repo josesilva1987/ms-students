@@ -3,6 +3,6 @@ export declare class UnitEntity {
     schoolId: number;
     systemId?: number;
     name: string;
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
 }

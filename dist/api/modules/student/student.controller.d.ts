@@ -2,7 +2,6 @@ import { CreateOrUpdateResponseDto } from "src/api/common/dto/createUpdateRespon
 import { IdDto } from "src/api/common/dto/id.dto";
 import { RADto } from "src/api/common/dto/ra.dto";
 import { StudentEntity } from "src/database/entities/student.entity";
-import { StudentDto } from "./dto/student.dto";
 import { StudentService } from "./student.service";
 export declare class StudentController {
     private studentService;
@@ -10,6 +9,6 @@ export declare class StudentController {
     getStudents(): Promise<StudentEntity[]>;
     getStudentsById(params: IdDto): Promise<StudentEntity>;
     getStudentsByRA(params: RADto): Promise<StudentEntity[]>;
-    createSchool(payload: StudentDto): Promise<StudentDto | CreateOrUpdateResponseDto>;
-    UpdateSchool(params: RADto, payload: StudentDto): Promise<CreateOrUpdateResponseDto>;
+    createSchool(payload: StudentEntity): Promise<CreateOrUpdateResponseDto>;
+    UpdateSchool(params: IdDto, payload: StudentEntity): Promise<CreateOrUpdateResponseDto>;
 }

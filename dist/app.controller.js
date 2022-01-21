@@ -17,7 +17,7 @@ let AppController = class AppController {
         this.appService = appService;
     }
     getRunning() {
-        return `RUNNING 1.0.0`;
+        return this.appService.getRunning();
     }
 };
 __decorate([

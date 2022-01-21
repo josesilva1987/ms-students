@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SystemIdDto = void 0;
+exports.SystemIdSchoolIdDto = exports.SystemIdDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
 class SystemIdDto {
 }
@@ -18,4 +18,15 @@ __decorate([
     __metadata("design:type", Number)
 ], SystemIdDto.prototype, "systemId", void 0);
 exports.SystemIdDto = SystemIdDto;
+class SystemIdSchoolIdDto {
+}
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'SystemId', example: 1 }),
+    __metadata("design:type", Number)
+], SystemIdSchoolIdDto.prototype, "systemId", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ description: 'SchoolId', example: 1 }),
+    __metadata("design:type", Number)
+], SystemIdSchoolIdDto.prototype, "schoolId", void 0);
+exports.SystemIdSchoolIdDto = SystemIdSchoolIdDto;
 //# sourceMappingURL=systemId.dto.js.map

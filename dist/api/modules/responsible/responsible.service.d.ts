@@ -11,5 +11,5 @@ export declare class ResponsibleService {
     getResponsibleById(id: number): Promise<ResponsibleEntity>;
     getResponsibleByDocument(document: string): Promise<ResponsibleEntity>;
     updateResponsible(id: number, payload: ResponsibleDto): Promise<CreateOrUpdateResponseDto>;
-    createResponsible(payload: ResponsibleDto | ResponsibleEntity): Promise<any>;
+    createResponsible(payload: ResponsibleDto): Promise<any>;
 }

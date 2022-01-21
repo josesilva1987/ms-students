@@ -25,13 +25,5 @@ __decorate([
     (0, swagger_1.ApiProperty)({ name: 'name', example: 'Unidade X' }),
     __metadata("design:type", String)
 ], UnitDto.prototype, "name", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ name: 'createdAt', example: new Date }),
-    __metadata("design:type", Date)
-], UnitDto.prototype, "createdAt", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ name: 'updatedAt', example: new Date, required: false }),
-    __metadata("design:type", Date)
-], UnitDto.prototype, "updatedAt", void 0);
 exports.UnitDto = UnitDto;
 //# sourceMappingURL=unit.dto.js.map

@@ -4,3 +4,11 @@ export class SystemIdDto {
   @ApiProperty({ description: 'SystemId', example: 1 })
   systemId: number;
 }
+
+export class SystemIdSchoolIdDto {
+  @ApiProperty({ description: 'SystemId', example: 1 })
+  systemId: number;
+
+  @ApiProperty({ description: 'SchoolId', example: 1 })
+  schoolId: number;
+}

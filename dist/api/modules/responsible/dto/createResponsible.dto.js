@@ -9,29 +9,37 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ResponsibleDto = void 0;
+exports.CreateResponsibleDto = void 0;
 const swagger_1 = require("@nestjs/swagger");
-class ResponsibleDto {
+class CreateResponsibleDto {
 }
 __decorate([
     (0, swagger_1.ApiProperty)({ name: 'document', example: "2345678900" }),
     __metadata("design:type", String)
-], ResponsibleDto.prototype, "document", void 0);
+], CreateResponsibleDto.prototype, "document", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ name: 'name', example: "Responsible X" }),
     __metadata("design:type", String)
-], ResponsibleDto.prototype, "name", void 0);
+], CreateResponsibleDto.prototype, "name", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ name: 'email', example: "teste@teste.com.br" }),
     __metadata("design:type", String)
-], ResponsibleDto.prototype, "email", void 0);
+], CreateResponsibleDto.prototype, "email", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ name: 'kinship', example: "Financial" }),
     __metadata("design:type", String)
-], ResponsibleDto.prototype, "kinship", void 0);
+], CreateResponsibleDto.prototype, "kinship", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ name: 'RA', example: "123456" }),
-    __metadata("design:type", String)
-], ResponsibleDto.prototype, "RA", void 0);
-exports.ResponsibleDto = ResponsibleDto;
-//# sourceMappingURL=responsible.dto.js.map
+    (0, swagger_1.ApiProperty)({ name: 'createdAt', example: new Date }),
+    __metadata("design:type", Date)
+], CreateResponsibleDto.prototype, "createdAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ name: 'updatedAt', example: new Date, required: false }),
+    __metadata("design:type", Date)
+], CreateResponsibleDto.prototype, "updatedAt", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ name: 'studentId', example: "123456" }),
+    __metadata("design:type", Number)
+], CreateResponsibleDto.prototype, "studentId", void 0);
+exports.CreateResponsibleDto = CreateResponsibleDto;
+//# sourceMappingURL=createResponsible.dto.js.map

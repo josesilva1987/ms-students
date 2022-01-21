@@ -54,21 +54,41 @@ let SchoolService = class SchoolService {
         }
     }
     async createSchool(payload) {
-        const result = await this.schoolRespository.insert(payload);
-        if (result.raw.affectedRows === 0) {
-            throw new common_1.HttpException('Error inserting school', common_1.HttpStatus.BAD_REQUEST);
+        try {
+            const existSchool = await this.getSchoolBySystemaId(payload.systemId);
+            if (existSchool.length === 0) {
+                payload.createdAt = new Date;
+                payload.updatedAt = new Date;
+                const result = await this.schoolRespository.insert(payload);
+                if (result.raw.affectedRows === 0) {
+                    throw new common_1.HttpException('Error inserting school', common_1.HttpStatus.BAD_REQUEST);
+                }
+                if (Array.isArray(payload)) {
+                    const mapped = result.raw.map((item) => {
+                        return { id: item.id };
+                    });
+                    return mapped;
+                }
+                return { id: result.raw.insertId };
+            }
+            else {
+                const result = await this.updateSchool(existSchool[0].id, payload);
+                return result;
+            }
         }
-        if (Array.isArray(payload)) {
-            const mapped = result.raw.map((item) => {
-                return { id: item.id };
-            });
-            return mapped;
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
         }
-        return { id: result.raw.insertId };
     }
     async updateSchool(id, payload) {
-        const result = await this.schoolRespository.update(id, payload);
-        return { id, rowAffected: result.affected };
+        try {
+            payload.updatedAt = new Date;
+            const result = await this.schoolRespository.update(id, payload);
+            return { id, rowAffected: result.affected };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 SchoolService = __decorate([

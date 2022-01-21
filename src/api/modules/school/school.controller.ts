@@ -41,7 +41,7 @@ export class SchoolController {
     @ApiBody({ required: true, type: SchoolDto })
     @ApiResponse({ status: 200, description: 'Task executed with success' ,type: SchoolDto })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
-    async createSchool(@Body() payload: SchoolDto): Promise<SchoolDto | CreateOrUpdateResponseDto>{
+    async createSchool(@Body() payload: SchoolEntity): Promise<SchoolDto | CreateOrUpdateResponseDto>{
         return this.schoolService.createSchool(payload);
     }
 
@@ -50,7 +50,7 @@ export class SchoolController {
     @ApiBody({ required: true, type: SchoolDto })
     @ApiResponse({ status: 200, description: 'Task executed with success' ,type: SchoolDto })
     @ApiResponse({ status: 400, description: 'Invalid Parameters' })
-    async UpdateSchool(@Param() params: IdDto, @Body() payload: SchoolDto): Promise<CreateOrUpdateResponseDto>{
+    async UpdateSchool(@Param() params: IdDto, @Body() payload: SchoolEntity): Promise<CreateOrUpdateResponseDto>{
         return this.schoolService.updateSchool(params.id, payload);
     }
 }

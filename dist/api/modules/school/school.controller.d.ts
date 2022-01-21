@@ -9,6 +9,6 @@ export declare class SchoolController {
     getSchools(): Promise<SchoolEntity[]>;
     getSchoolById(params: IdDto): Promise<SchoolEntity>;
     getSchoolBySystemId(params: IdDto): Promise<SchoolEntity[]>;
-    createSchool(payload: SchoolDto): Promise<SchoolDto | CreateOrUpdateResponseDto>;
-    UpdateSchool(params: IdDto, payload: SchoolDto): Promise<CreateOrUpdateResponseDto>;
+    createSchool(payload: SchoolEntity): Promise<SchoolDto | CreateOrUpdateResponseDto>;
+    UpdateSchool(params: IdDto, payload: SchoolEntity): Promise<CreateOrUpdateResponseDto>;
 }

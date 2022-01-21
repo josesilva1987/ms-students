@@ -26,7 +26,7 @@ __decorate([
     __metadata("design:type", Number)
 ], UnitEntity.prototype, "systemId", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'name', comment: 'Nome do Aluno' }),
+    (0, typeorm_1.Column)({ name: 'name', comment: 'Nome do Aluno', length: 100 }),
     __metadata("design:type", String)
 ], UnitEntity.prototype, "name", void 0);
 __decorate([
@@ -41,4 +41,4 @@ UnitEntity = __decorate([
     (0, typeorm_1.Entity)('unit')
 ], UnitEntity);
 exports.UnitEntity = UnitEntity;
-//# sourceMappingURL=Unit.entity.js.map
+//# sourceMappingURL=unit.entity.js.map

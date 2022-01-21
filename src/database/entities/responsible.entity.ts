@@ -7,17 +7,17 @@ export class ResponsibleEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ name: 'document', comment: 'Documento do Responsável' })
+    @Column({ name: 'document', comment: 'Documento do Responsável', length: 18 })
     document: string;
 
-    @Column({ name: 'name', comment: 'Nome do Responsável' })
+    @Column({ name: 'name', comment: 'Nome do Responsável', length: 100 })
     name: string;
 
-    @Column({ name: 'email', comment: 'Email do Aluno' })
+    @Column({ name: 'email', comment: 'Email do Aluno', length: 100 })
     email: string;
 
-    @Column({ name: 'kinship', comment: 'Grau de Parentesco' })
-    kinship: 'father' | 'mother' | 'Financial' | 'Pedagogical' | 'Others';
+    @Column({ name: 'kinship', comment: 'Grau de Parentesco', length: 12 })
+    kinship: string;
 
     @Column({ name: 'created_at', comment: 'Data de criação do Registro' })
     createdAt: Date;
@@ -25,9 +25,7 @@ export class ResponsibleEntity {
     @Column({ name: 'updated_at' , nullable: true, comment: 'Data da ultima alteração do Registro'} )
     updatedAt?: Date;
 
-    @ManyToOne(() => StudentEntity, student => student.RA)
-    @JoinColumn({name:'RA'})
-    @Column({ name: 'RA', comment: 'RA do Aluno' })
-    RA: string;
+    @Column({ name: 'studentId', comment: 'Id do Aluno' })
+    studentId: number;
 }
 

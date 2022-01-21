@@ -3,8 +3,8 @@ export declare class ResponsibleEntity {
     document: string;
     name: string;
     email: string;
-    kinship: 'father' | 'mother' | 'Financial' | 'Pedagogical' | 'Others';
+    kinship: string;
     createdAt: Date;
     updatedAt?: Date;
-    RA: string;
+    studentId: number;
 }

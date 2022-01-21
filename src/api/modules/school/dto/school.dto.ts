@@ -7,11 +7,5 @@ export class SchoolDto {
 
     @ApiProperty({ name:'name', example: "Colégio X" })
     name: string;
-
-    @ApiProperty({ name:'createdAt', example: new Date })
-    createdAt: Date;
-
-    @ApiProperty({ name:'updatedAt', example: new Date, required: false })
-    updatedAt?: Date;
 }
 

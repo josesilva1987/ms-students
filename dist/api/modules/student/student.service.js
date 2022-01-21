@@ -54,21 +54,41 @@ let StudentService = class StudentService {
         }
     }
     async createStudent(payload) {
-        const result = await this.studentRepository.insert(payload);
-        if (result.raw.affectedRows === 0) {
-            throw new common_1.HttpException('Error inserting Student', common_1.HttpStatus.BAD_REQUEST);
+        try {
+            const existStudent = await this.getStudentByRA(payload.RA);
+            if (existStudent.length === 0) {
+                payload.createdAt = new Date;
+                payload.updatedAt = new Date;
+                const result = await this.studentRepository.insert(payload);
+                if (result.raw.affectedRows === 0) {
+                    throw new common_1.HttpException('Error inserting Student', common_1.HttpStatus.BAD_REQUEST);
+                }
+                if (Array.isArray(payload)) {
+                    const mapped = result.raw.map((item) => {
+                        return { id: item.id };
+                    });
+                    return mapped;
+                }
+                return { id: result.raw.insertId };
+            }
+            else {
+                const result = await this.updateStudentById(existStudent[0].id, payload);
+                return result;
+            }
         }
-        if (Array.isArray(payload)) {
-            const mapped = result.raw.map((item) => {
-                return { id: item.id };
-            });
-            return mapped;
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
         }
-        return { id: result.raw.insertId };
     }
-    async updateStudent(RA, payload) {
-        const result = await this.studentRepository.update(RA, payload);
-        return { RA, rowAffected: result.affected };
+    async updateStudentById(id, payload) {
+        try {
+            payload.updatedAt = new Date;
+            const result = await this.studentRepository.update(id, payload);
+            return { id, rowAffected: result.affected };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 StudentService = __decorate([

@@ -5,6 +5,7 @@ import { ResponsibleEntity } from "src/database/entities/responsible.entity";
 import { ResponsableRepository } from "src/database/repository/responsible.repository";
 import { InsertResult, UpdateResult } from "typeorm";
 import { StudentService } from "../student/student.service";
+import { CreateResponsibleDto } from "./dto/createResponsible.dto";
 import { ResponsibleDto } from "./dto/responsible.dto";
 
 @Injectable()
@@ -48,23 +49,33 @@ export class ResponsibleService {
     }
 
     async updateResponsible(id: number, payload: ResponsibleDto): Promise<CreateOrUpdateResponseDto> {
-        try{
+        try {
             const result: UpdateResult = await this.responsibleRepository.update(id, payload);
 
             return { id, rowAffected: result.affected }
         }
-        catch(error){
+        catch (error) {
             throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
         }
     }
 
-    async createResponsible(payload: ResponsibleDto | ResponsibleEntity) {
+    async createResponsible(payload: ResponsibleDto) {
         try {
-            const existRa = await this.studentService.getStudentByRA(payload.RA);
+            const existStudent = await this.studentService.getStudentByRA(payload.RA);
 
-            if(existRa.length == 0) return `O RA: ${payload.RA} não existe na base de dados.`;
+            if (existStudent.length == 0) return `O RA: ${payload.RA} não existe na base de dados.`;
 
-            const result: InsertResult = await this.responsibleRepository.insert(payload);
+            const payloadResponsible: CreateResponsibleDto = {
+                document: payload.document,
+                name: payload.name,
+                email: payload.email,
+                kinship: payload.kinship,
+                createdAt: new Date,
+                updatedAt: new Date,
+                studentId: existStudent[0].id
+            }
+
+            const result: InsertResult = await this.responsibleRepository.insert(payloadResponsible);
 
             if (result.raw.affectedRows === 0) {
                 throw new HttpException('Error inserting school', HttpStatus.BAD_REQUEST);

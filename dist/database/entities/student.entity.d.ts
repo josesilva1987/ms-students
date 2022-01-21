@@ -3,6 +3,6 @@ export declare class StudentEntity {
     RA: string;
     name: string;
     email?: string;
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
 }

@@ -66,10 +66,19 @@ let ResponsibleService = class ResponsibleService {
     }
     async createResponsible(payload) {
         try {
-            const existRa = await this.studentService.getStudentByRA(payload.RA);
-            if (existRa.length == 0)
+            const existStudent = await this.studentService.getStudentByRA(payload.RA);
+            if (existStudent.length == 0)
                 return `O RA: ${payload.RA} não existe na base de dados.`;
-            const result = await this.responsibleRepository.insert(payload);
+            const payloadResponsible = {
+                document: payload.document,
+                name: payload.name,
+                email: payload.email,
+                kinship: payload.kinship,
+                createdAt: new Date,
+                updatedAt: new Date,
+                studentId: existStudent[0].id
+            };
+            const result = await this.responsibleRepository.insert(payloadResponsible);
             if (result.raw.affectedRows === 0) {
                 throw new common_1.HttpException('Error inserting school', common_1.HttpStatus.BAD_REQUEST);
             }

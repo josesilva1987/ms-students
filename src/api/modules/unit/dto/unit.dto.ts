@@ -9,11 +9,5 @@ export class UnitDto {
 
     @ApiProperty({ name:'name', example: 'Unidade X'})
     name: string;
-
-    @ApiProperty({ name:'createdAt', example: new Date })
-    createdAt: Date;
-
-    @ApiProperty({ name:'updatedAt', example: new Date, required: false })
-    updatedAt?: Date;
 }
 

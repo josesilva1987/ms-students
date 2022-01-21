@@ -10,7 +10,7 @@ exports.AppService = void 0;
 const common_1 = require("@nestjs/common");
 let AppService = class AppService {
     getRunning() {
-        return 'Hello World!';
+        return `RUNNING 1.0.0`;
     }
 };
 AppService = __decorate([

@@ -41,11 +41,12 @@ let UnitService = class UnitService {
             throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
         }
     }
-    async getUnitBySystemId(systemId) {
+    async getUnitBySchoolIdAndSystemId(systemId, schoolId) {
         try {
-            return this.unitRespository.find({
+            return await this.unitRespository.find({
                 where: {
-                    systemId
+                    systemId,
+                    schoolId
                 },
             });
         }
@@ -54,25 +55,51 @@ let UnitService = class UnitService {
         }
     }
     async createUnit(payload) {
-        const result = await this.unitRespository.insert(payload);
-        if (result.raw.affectedRows === 0) {
-            throw new common_1.HttpException('Error inserting Unit', common_1.HttpStatus.BAD_REQUEST);
+        try {
+            const existUnit = await this.getUnitBySchoolIdAndSystemId(payload.systemId, payload.schoolId);
+            if (existUnit.length === 0) {
+                payload.createdAt = new Date;
+                payload.updatedAt = new Date;
+                const result = await this.unitRespository.insert(payload);
+                if (result.raw.affectedRows === 0) {
+                    throw new common_1.HttpException('Error inserting Unit', common_1.HttpStatus.BAD_REQUEST);
+                }
+                if (Array.isArray(payload)) {
+                    const mapped = result.raw.map((item) => {
+                        return { id: item.id };
+                    });
+                    return mapped;
+                }
+                return { id: result.raw.insertId };
+            }
+            else {
+                const result = await this.updateUnitById(existUnit[0].id, payload);
+                return result;
+            }
         }
-        if (Array.isArray(payload)) {
-            const mapped = result.raw.map((item) => {
-                return { id: item.id };
-            });
-            return mapped;
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
         }
-        return { id: result.raw.insertId };
     }
     async updateUnitById(id, payload) {
-        const result = await this.unitRespository.update(id, payload);
-        return { id, rowAffected: result.affected };
+        try {
+            payload.updatedAt = new Date;
+            const result = await this.unitRespository.update(id, payload);
+            return { id, rowAffected: result.affected };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async updateUnitBySystemid(id, payload) {
-        const result = await this.unitRespository.update(id, payload);
-        return { id, rowAffected: result.affected };
+        try {
+            payload.updatedAt = new Date;
+            const result = await this.unitRespository.update(id, payload);
+            return { id, rowAffected: result.affected };
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 UnitService = __decorate([

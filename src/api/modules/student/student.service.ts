@@ -7,10 +7,10 @@ import { InsertResult, UpdateResult } from "typeorm";
 import { StudentDto } from "./dto/student.dto";
 
 @Injectable()
-export class StudentService{
-    constructor(@InjectRepository(StudentEntity) private studentRepository: StudentRepository) {}
+export class StudentService {
+    constructor(@InjectRepository(StudentEntity) private studentRepository: StudentRepository) { }
 
-    async getStudents(): Promise<StudentEntity[]>{
+    async getStudents(): Promise<StudentEntity[]> {
         try {
             return this.studentRepository.find();
         } catch (error) {
@@ -18,7 +18,7 @@ export class StudentService{
         }
     }
 
-    async getStudentById(id: number): Promise<StudentEntity>{
+    async getStudentById(id: number): Promise<StudentEntity> {
         try {
             return this.studentRepository.findOne({
                 where: {
@@ -30,7 +30,7 @@ export class StudentService{
         }
     }
 
-    async getStudentByRA(RA: string): Promise<StudentEntity[]>{
+    async getStudentByRA(RA: string): Promise<StudentEntity[]> {
         try {
             return this.studentRepository.find({
                 where: {
@@ -42,27 +42,45 @@ export class StudentService{
         }
     }
 
-    async createStudent(payload: StudentDto | StudentEntity){
-        const result: InsertResult = await this.studentRepository.insert(payload);
+    async createStudent(payload: StudentEntity) {
+        try {
+            const existStudent = await this.getStudentByRA(payload.RA);
 
-        if(result.raw.affectedRows === 0){
-            throw new HttpException('Error inserting Student', HttpStatus.BAD_REQUEST);
-          }
-      
-          if (Array.isArray(payload)) {
-            const mapped = result.raw.map((item: any) => {
-              return { id: item.id };
-            });
-      
-            return mapped;
-          }
-      
-          return { id: result.raw.insertId };
+            if (existStudent.length === 0) {
+                payload.createdAt = new Date;
+                payload.updatedAt = new Date;
+
+                const result: InsertResult = await this.studentRepository.insert(payload);
+
+                if (result.raw.affectedRows === 0) {
+                    throw new HttpException('Error inserting Student', HttpStatus.BAD_REQUEST);
+                }
+
+                if (Array.isArray(payload)) {
+                    const mapped = result.raw.map((item: any) => {
+                        return { id: item.id };
+                    });
+
+                    return mapped;
+                }
+
+                return { id: result.raw.insertId };
+            } else {
+                const result = await this.updateStudentById(existStudent[0].id, payload);
+                return result;
+            }
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    async updateStudent(RA: string, payload: StudentDto): Promise<CreateOrUpdateResponseDto>{
-        const result: UpdateResult = await this.studentRepository.update(RA, payload);
-
-        return {RA, rowAffected: result.affected };
+    async updateStudentById(id: number, payload: Partial<StudentEntity>): Promise<CreateOrUpdateResponseDto> {
+        try {
+            payload.updatedAt = new Date;
+            const result: UpdateResult = await this.studentRepository.update(id, payload);
+            return { id, rowAffected: result.affected };
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        }
     }
 }

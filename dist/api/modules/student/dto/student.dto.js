@@ -25,13 +25,5 @@ __decorate([
     (0, swagger_1.ApiProperty)({ name: 'email', example: 'exemplo@exemplo.com.br', required: false }),
     __metadata("design:type", String)
 ], StudentDto.prototype, "email", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ name: 'createdAt', example: new Date }),
-    __metadata("design:type", Date)
-], StudentDto.prototype, "createdAt", void 0);
-__decorate([
-    (0, swagger_1.ApiProperty)({ name: 'updatedAt', example: new Date, required: false }),
-    __metadata("design:type", Date)
-], StudentDto.prototype, "updatedAt", void 0);
 exports.StudentDto = StudentDto;
 //# sourceMappingURL=student.dto.js.map

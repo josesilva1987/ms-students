@@ -10,9 +10,9 @@ import { SchoolDto } from "./dto/school.dto";
 export class SchoolService {
     constructor(
         @InjectRepository(SchoolEntity) private schoolRespository: SchoolRepository
-    ) {}
+    ) { }
 
-    async getSchool(): Promise<SchoolEntity[]>{
+    async getSchool(): Promise<SchoolEntity[]> {
         try {
             return this.schoolRespository.find();
         } catch (error) {
@@ -20,7 +20,7 @@ export class SchoolService {
         }
     }
 
-    async getSchoolById(id: number): Promise<SchoolEntity>{
+    async getSchoolById(id: number): Promise<SchoolEntity> {
         try {
             return this.schoolRespository.findOne({
                 where: {
@@ -32,7 +32,7 @@ export class SchoolService {
         }
     }
 
-    async getSchoolBySystemaId(systemId: number): Promise<SchoolEntity[]>{
+    async getSchoolBySystemaId(systemId: number): Promise<SchoolEntity[]> {
         try {
             return this.schoolRespository.find({
                 where: {
@@ -44,27 +44,45 @@ export class SchoolService {
         }
     }
 
-    async createSchool(payload: SchoolDto | SchoolEntity){
-        const result: InsertResult = await this.schoolRespository.insert(payload);
+    async createSchool(payload: SchoolEntity) {
+        try {
+            const existSchool = await this.getSchoolBySystemaId(payload.systemId);
 
-        if(result.raw.affectedRows === 0){
-            throw new HttpException('Error inserting school', HttpStatus.BAD_REQUEST);
-          }
-      
-          if (Array.isArray(payload)) {
-            const mapped = result.raw.map((item: any) => {
-              return { id: item.id };
-            });
-      
-            return mapped;
-          }
-      
-          return { id: result.raw.insertId };
+            if (existSchool.length === 0) {
+                payload.createdAt = new Date;
+                payload.updatedAt = new Date;
+                const result: InsertResult = await this.schoolRespository.insert(payload);
+
+                if (result.raw.affectedRows === 0) {
+                    throw new HttpException('Error inserting school', HttpStatus.BAD_REQUEST);
+                }
+
+                if (Array.isArray(payload)) {
+                    const mapped = result.raw.map((item: any) => {
+                        return { id: item.id };
+                    });
+
+                    return mapped;
+                }
+
+                return { id: result.raw.insertId };
+            } else {
+                const result = await this.updateSchool(existSchool[0].id, payload);
+                return result;
+            }
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        }
     }
 
-    async updateSchool(id: number, payload: SchoolDto): Promise<CreateOrUpdateResponseDto>{
-        const result: UpdateResult = await this.schoolRespository.update(id, payload);
+    async updateSchool(id: number, payload: SchoolEntity): Promise<CreateOrUpdateResponseDto> {
+        try {
+            payload.updatedAt = new Date
 
-        return {id, rowAffected: result.affected };
+            const result: UpdateResult = await this.schoolRespository.update(id, payload);
+            return { id, rowAffected: result.affected };
+        } catch (error) {
+            throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+        }
     }
 }

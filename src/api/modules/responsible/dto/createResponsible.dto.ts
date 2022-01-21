@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 
 /* eslint-disable prettier/prettier */
-export class ResponsibleDto {
+export class CreateResponsibleDto {
     @ApiProperty({ name:'document', example: "2345678900" })
     document: string;
 
@@ -14,7 +14,13 @@ export class ResponsibleDto {
     @ApiProperty({ name:'kinship', example: "Financial" })
     kinship: 'father' | 'mother' | 'Financial' | 'Pedagogical' | 'Others';
 
-    @ApiProperty({ name:'RA', example: "123456" })
-    RA: string;
+    @ApiProperty({ name:'createdAt', example: new Date })
+    createdAt: Date;
+
+    @ApiProperty({ name:'updatedAt', example: new Date, required: false})
+    updatedAt?: Date;
+
+    @ApiProperty({ name:'studentId', example: "123456" })
+    studentId: number;
 }
 

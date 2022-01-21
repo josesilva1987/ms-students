@@ -2,6 +2,6 @@ export declare class SchoolEntity {
     id: number;
     systemId?: number;
     name: string;
-    createdAt: Date;
+    createdAt?: Date;
     updatedAt?: Date;
 }

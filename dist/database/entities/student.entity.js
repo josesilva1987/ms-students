@@ -18,15 +18,15 @@ __decorate([
     __metadata("design:type", Number)
 ], StudentEntity.prototype, "id", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'RA', comment: 'Registro Acadêmico do Aluno' }),
+    (0, typeorm_1.Column)({ name: 'RA', comment: 'Registro Acadêmico do Aluno', length: 25, unique: true }),
     __metadata("design:type", String)
 ], StudentEntity.prototype, "RA", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'name', comment: 'Nome do Aluno' }),
+    (0, typeorm_1.Column)({ name: 'name', comment: 'Nome do Aluno', length: 120 }),
     __metadata("design:type", String)
 ], StudentEntity.prototype, "name", void 0);
 __decorate([
-    (0, typeorm_1.Column)({ name: 'email', comment: 'Email do Aluno', nullable: true }),
+    (0, typeorm_1.Column)({ name: 'email', comment: 'Email do Aluno', nullable: true, length: 120 }),
     __metadata("design:type", String)
 ], StudentEntity.prototype, "email", void 0);
 __decorate([
